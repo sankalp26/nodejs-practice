@@ -1,0 +1,20 @@
+{
+  "name": "firstserver",
+  "version": "1.0.0",
+  "description": "Creating first server using NodeJS",
+  "license": "ISC",
+  "author": "Sankalp Varshney",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "go": "nodemon server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemailer": "^7.0.12"
+  }
+}
