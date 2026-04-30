@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <div class="card shadow-sm p-4">
+    <h3 class="mb-4">New Blog</h3>
+
+    <form action="/" method="POST">
+
+      <!-- Title -->
+      <div class="mb-3">
+        <label class="form-label">Blog title</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          name="title" 
+          placeholder="Enter Blog title"
+          required
+        >
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea 
+          class="form-control" 
+          name="desc" 
+          rows="3"
+          placeholder="Enter description"
+          required
+        ></textarea>
+      </div>
+
+
+      <!-- Image URL -->
+      <div class="mb-3">
+        <label class="form-label">Image URL</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          name="imgUrl" 
+          placeholder="Enter image link"
+          required
+        >
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary">
+        Add Product
+      </button>
+
+    </form>
+  </div>
+</div>
