@@ -20,9 +20,10 @@ export default class ProductController {
   // POST "/": Processes the data sent from the form
   addNewProduct(req, res) {
     // req.body contains the key-value pairs submitted in the form
-    console.log(req.body);
+    const { name, desc, price } = req.body;
+    const imgUrl = "images/" + req.file.filename;
 
-    ProductModel.add(req.body); //calling the static method to add the received data from the Form. to be added to the original array of data.
+    ProductModel.add(name, desc, price,imgUrl); //calling the static method to add the received data from the Form. to be added to the original array of data.
     res.render("products", { products: products });
   }
 
@@ -47,10 +48,10 @@ export default class ProductController {
     res.render("products", { products: products });
   }
 
-  deleteProduct(req,res){
+  deleteProduct(req, res) {
     const id = req.params.id;
     const productFound = ProductModel.getProdById(id);
-    if(!productFound){
+    if (!productFound) {
       return res.status(401).send("Product not Found!");
     }
     ProductModel.delete(id);

@@ -1,0 +1,5 @@
+Install multer.
+Change the view to add upload option.
+Create the middleware to handle the uploads(files)
+Apply middleware to request. (and make changes in the validation middleware: remove the imgUrl rule)
+Update controller to update urls of images.

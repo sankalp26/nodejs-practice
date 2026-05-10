@@ -13,8 +13,8 @@ export default class ProductModel {
   }
 
   // Static method to add a new product
-  static add(prodObj) {
-    const { name, desc, price, imgUrl } = prodObj; // Extract product details from the object (destructuring the obj) eg: name = prodObj.name etc...
+  static add(name, desc, price, imgUrl) {
+    // const { name, desc, price, imgUrl } = prodObj; // Extract product details from the object (destructuring the obj) eg: name = prodObj.name etc...
     const newProduct = new ProductModel(
       products.length + 1,
       name,
@@ -25,18 +25,18 @@ export default class ProductModel {
     products.push(newProduct); // This adds the product only to in-memory data. When the server restarts, the array resets to its original data
   }
 
-  static getProdById(id){
-    return products.find((product)=>product.id == id);
+  static getProdById(id) {
+    return products.find((product) => product.id == id);
   }
 
-  static updateProduct(prodObj){
-    const index = products.findIndex((product)=>product.id==prodObj.id);
+  static updateProduct(prodObj) {
+    const index = products.findIndex((product) => product.id == prodObj.id);
     products[index] = prodObj;
   }
 
-  static delete(id){
-    const index = products.findIndex((p)=>p.id==id);
-    products.splice(index,1);
+  static delete(id) {
+    const index = products.findIndex((p) => p.id == id);
+    products.splice(index, 1);
   }
 }
 // Array that stores all product objects

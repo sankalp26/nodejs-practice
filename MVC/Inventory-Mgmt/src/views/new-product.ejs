@@ -6,7 +6,7 @@
     <% } %>
     
 
-    <form action="/" method="POST">
+    <form action="/" method="POST" enctype="multipart/form-data">
       <!-- Name -->
       <div class="mb-3">
         <label class="form-label">Product Name</label>
@@ -46,13 +46,7 @@
       <!-- Image URL -->
       <div class="mb-3">
         <label class="form-label">Image URL</label>
-        <input
-          type="text"
-          class="form-control"
-          name="imgUrl"
-          placeholder="Enter image link"
-          required
-        />
+        <input type="file" class="form-control" name="imgUrl" accept="images/*">
       </div>
 
       <!-- Submit button -->

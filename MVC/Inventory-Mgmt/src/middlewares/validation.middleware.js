@@ -30,7 +30,11 @@ const validateRequest = async (req, res, next) => {
     body("price")
       .isFloat({ gt: 0 })
       .withMessage("Price must be a positive number"),
-    body("imgUrl").isURL().withMessage("URL is invalid"),
+    body("imgUrl").custom((value,{req})=>{
+      if(!req.file){
+        throw new Error("Image is required");
+      }
+    })
   ];
   //2. Run those rules.
   await Promise.all(rules.map((rule) => rule.run(req))); // Execute each rule and wait for all to complete.--- .run() makes each rule of rules array a Promise.
