@@ -4,8 +4,10 @@ import ProductController from "./src/controller/product.controller.js"; // Impor
 import ejsLayouts from "express-ejs-layouts"; // Import middleware for using layouts with EJS
 import validateRequest from "./src/middlewares/validation.middleware.js";
 import { uploadFile } from "./src/middlewares/file-upload-middleware.js";
+import UserController from "./src/controller/user.controller.js";
 const server = express(); // Create an Express application
 const productController = new ProductController(); // Create an instance of ProductController
+const userController = new UserController(); // Create an instance of UserController
 
 //set up view engine settings
 server.set("view engine", "ejs"); // Set up the view engine to use EJS
@@ -22,6 +24,12 @@ server.get("/new", productController.getAddForm);
 
 server.get("/update-product/:id", productController.getUpdateProductView);
 
+//serving Registration form
+server.get("/register", userController.getRegister);
+
+server.get("/login", userController.getLogin);
+server.post("/register",userController.postRegister);
+server.post("/login",userController.postLogin);
 server.post("/delete-product/:id", productController.deleteProduct);
 
 // Parse form data sent from HTML forms and make it available in req.body
@@ -32,7 +40,11 @@ server.post(
   productController.addNewProduct,
 ); //Added Middleware to validate the received form data before sending it to Controller.
 
-server.post("/update-product", productController.postUpdateProduct);
+server.post(
+  "/update-product",
+  uploadFile.single("imgUrl"),
+  productController.postUpdateProduct,
+);
 
 server.listen(3400, () => {
   console.log("Server is running on port 3400");

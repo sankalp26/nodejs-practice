@@ -50,4 +50,4 @@ const validateRequest = async (req, res, next) => {
   }
   next(); // If no errors exist, pass control to the next middleware or controller in the route
 };
-export default validateRequest;
+export default validateRequest; 

@@ -23,7 +23,7 @@ export default class ProductController {
     const { name, desc, price } = req.body;
     const imgUrl = "images/" + req.file.filename;
 
-    ProductModel.add(name, desc, price,imgUrl); //calling the static method to add the received data from the Form. to be added to the original array of data.
+    ProductModel.add(name, desc, price, imgUrl); //calling the static method to add the received data from the Form. to be added to the original array of data.
     res.render("products", { products: products });
   }
 
@@ -44,7 +44,25 @@ export default class ProductController {
   }
 
   postUpdateProduct(req, res) {
-    ProductModel.updateProduct(req.body);
+    // Extract updated fields from the submitted form
+    const { id, name, desc, price } = req.body;
+
+    // Get the currently stored product so we can preserve any existing image
+    const oldProd = ProductModel.getProdById(id);
+    if (!oldProd) {
+      return res.status(401).send("Product not Found!");
+    }
+    // Build the updated product object using the new values
+    // Keep the previous image URL by default unless a new file is uploaded
+    const updatedProd = { id, name, desc, price, imgUrl: oldProd.imgUrl };
+
+    // If a new image file was uploaded, replace the old image URL
+    if (req.file) {
+      updatedProd.imgUrl = "images/" + req.file.filename;
+    }
+
+    // Save the updated product back into the model and re-render the list
+    ProductModel.updateProduct(updatedProd);
     res.render("products", { products: products });
   }
 

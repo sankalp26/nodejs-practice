@@ -1,0 +1,37 @@
+<div class="container mt-5">
+    <% if(errorMessage){ %>
+      <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
+    <% } %>
+  <div class="card shadow-sm p-4">
+    <h3 class="mb-4">Login</h3>
+    <form action="/login" method="POST">
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          id="email"
+          placeholder="Enter email"
+          required
+        />
+      </div>
+      <!-- Password -->
+      <div class="mb-3">
+        <label class="form-label" id="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          id="password"
+          placeholder="Enter password"
+          required
+        />
+      </div>
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+</div>
