@@ -5,6 +5,8 @@ import ejsLayouts from "express-ejs-layouts"; // Import middleware for using lay
 import validateRequest from "./src/middlewares/validation.middleware.js";
 import { uploadFile } from "./src/middlewares/file-upload-middleware.js";
 import UserController from "./src/controller/user.controller.js";
+import session from "express-session";
+import {auth} from "./src/middlewares/auth.middleware.js";
 const server = express(); // Create an Express application
 const productController = new ProductController(); // Create an instance of ProductController
 const userController = new UserController(); // Create an instance of UserController
@@ -16,25 +18,34 @@ server.use(ejsLayouts); // Enable EJS layout middleware
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static("public")); // Serve static files like CSS, images, and JavaScript from the public folder
+server.use(
+  session({
+    secret: "SecretKey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  }),
+);
 
 // Handle GET request for the home route ("/")
-server.get("/", productController.getProducts); // Calls getProducts method from ProductController
-server.get("/new", productController.getAddForm);
+server.get("/", auth, productController.getProducts); // Calls getProducts method from ProductController
+server.get("/new", auth, productController.getAddForm);
 //server.use(express.static("src/views"));
 
-server.get("/update-product/:id", productController.getUpdateProductView);
+server.get("/update-product/:id", auth, productController.getUpdateProductView);
 
 //serving Registration form
 server.get("/register", userController.getRegister);
 
 server.get("/login", userController.getLogin);
-server.post("/register",userController.postRegister);
-server.post("/login",userController.postLogin);
-server.post("/delete-product/:id", productController.deleteProduct);
+server.post("/register", userController.postRegister);
+server.post("/login", userController.postLogin);
+server.post("/delete-product/:id", auth, productController.deleteProduct);
 
 // Parse form data sent from HTML forms and make it available in req.body
 server.post(
   "/",
+  auth,
   uploadFile.single("imgUrl"), //first transform multipart form data then validate
   validateRequest,
   productController.addNewProduct,
@@ -42,6 +53,7 @@ server.post(
 
 server.post(
   "/update-product",
+  auth,
   uploadFile.single("imgUrl"),
   productController.postUpdateProduct,
 );

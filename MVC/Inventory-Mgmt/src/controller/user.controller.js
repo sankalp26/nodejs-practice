@@ -14,10 +14,10 @@ export default class UserController {
   }
   postLogin(req, res) {
     const userFound = UserModel.login(req.body);
-    if (userFound) {
-      return res.render("products", { products: products });
-    } else {
-      res.render("login", { errorMessage: "Login Failed, Check Credentials" });
-    }
+    if (!userFound) {
+      return res.render("login", { errorMessage: "Login Failed, Check Credentials" });
+    } 
+    req.session.userEmail = req.body.email;
+    return res.render("products", { products: products });
   }
 }
